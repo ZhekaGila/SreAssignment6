@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SRE Microservices Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>SRE Microservices Platform</h1>
+    <p>Dlya Zadaniye</p>
+  </header>
+
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <h2>Authentication</h2>
+        <p>Login and authorization demo.</p>
+        <button onclick="login()">Login</button>
+        <button onclick="authorize()">Authorize</button>
+      </div>
+
+      <div class="card">
+        <h2>Products</h2>
+        <p>Retrieve product data from Product Service.</p>
+        <button onclick="getProducts()">Get Products</button>
+      </div>
+
+      <div class="card">
+        <h2>Orders</h2>
+        <p>Create an order using Order Service and PostgreSQL.</p>
+        <button onclick="createOrder()">Create Order</button>
+        <button onclick="checkOrderHealth()">Check Order Health</button>
+      </div>
+
+      <div class="card">
+        <h2>Users</h2>
+        <p>Display users from User Service.</p>
+        <button onclick="getUsers()">Get Users</button>
+      </div>
+
+      <div class="card">
+        <h2>Chat</h2>
+        <p>Send a simple chat message.</p>
+        <input id="chatUser" placeholder="User name" value="Zheka">
+        <input id="chatText" placeholder="Message" value="Hello from frontend">
+        <button onclick="sendMessage()">Send Message</button>
+        <button onclick="getMessages()">Get Messages</button>
+      </div>
+    </div>
+
+    <h2>Response Output</h2>
+    <pre id="output">Click any button to test microservices...</pre>
+  </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
