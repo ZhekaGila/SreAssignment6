@@ -7,5 +7,3 @@ terraform/.terraform/
 # sensitive
 *.pem
 *.key
-
-terraform.tfvars
