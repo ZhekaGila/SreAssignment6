@@ -1,27 +1,70 @@
-version: "3.9"
-
 services:
-  auth-service:
-    build: ./auth
+  frontend:
+    build: ./frontend
+    container_name: sre_frontend
+    ports:
+      - "8080:80"
+  product-service:
+    build: ./product-service
+    container_name: sre_product_service
     ports:
       - "8001:8000"
-
-  user-service:
-    build: ./user
+  order-service:
+    build: ./order-service
+    container_name: sre_order_service
     ports:
       - "8002:8000"
-
-  product-service:
-    build: ./product
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: sre_db
+      DB_USER: sre_user
+      DB_PASSWORD: sre_password
+    depends_on:
+      - db
+  auth-service:
+    build: ./auth-service
+    container_name: sre_auth_service
     ports:
       - "8003:8000"
-
-  order-service:
-    build: ./order
+  user-service:
+    build: ./user-service
+    container_name: sre_user_service
     ports:
       - "8004:8000"
-
   chat-service:
-    build: ./chat
+    build: ./chat-service
+    container_name: sre_chat_service
     ports:
       - "8005:8000"
+  db:
+    image: postgres:15
+    container_name: sre_postgres
+    environment:
+      POSTGRES_USER: sre_user
+      POSTGRES_PASSWORD: sre_password
+      POSTGRES_DB: sre_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  prometheus:
+    image: prom/prometheus
+    container_name: sre_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - product-service
+      - order-service
+  grafana:
+    image: grafana/grafana
+    container_name: sre_grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:
