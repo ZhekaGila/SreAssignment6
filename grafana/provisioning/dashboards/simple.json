@@ -1,57 +1,65 @@
 {
-  "annotations": {
-    "list": []
-  },
+  "annotations": { "list": [] },
   "editable": true,
   "panels": [
     {
       "type": "timeseries",
-      "title": "Requests per Service",
+      "title": "Auth Service",
       "targets": [
         {
-          "expr": "rate(http_requests_total[1m])",
-          "legendFormat": "{{job}}"
+          "expr": "rate(auth_service_requests_total[1m])",
+          "legendFormat": "auth"
         }
       ],
       "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
     },
     {
       "type": "timeseries",
-      "title": "5xx Errors",
+      "title": "Product Service",
       "targets": [
         {
-          "expr": "rate(http_requests_total{status=~\"5..\"}[1m])",
-          "legendFormat": "{{job}}"
+          "expr": "rate(product_service_requests_total[1m])",
+          "legendFormat": "product"
         }
       ],
       "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
     },
     {
       "type": "timeseries",
-      "title": "Latency (p95)",
+      "title": "Order Service",
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, rate(request_duration_seconds_bucket[1m]))",
-          "legendFormat": "{{job}}"
+          "expr": "rate(order_service_requests_total[1m])",
+          "legendFormat": "order"
         }
       ],
       "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }
     },
     {
       "type": "timeseries",
-      "title": "Total Traffic",
+      "title": "User Service",
       "targets": [
         {
-          "expr": "sum(rate(http_requests_total[1m]))",
-          "legendFormat": "total"
+          "expr": "rate(user_service_requests_total[1m])",
+          "legendFormat": "user"
         }
       ],
       "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Chat Service",
+      "targets": [
+        {
+          "expr": "rate(chat_service_requests_total[1m])",
+          "legendFormat": "chat"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 }
     }
   ],
   "schemaVersion": 38,
   "style": "dark",
-  "tags": ["microservices"],
   "title": "Microservices Overview",
   "version": 1
 }
