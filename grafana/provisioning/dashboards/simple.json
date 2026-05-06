@@ -7,7 +7,7 @@
       "title": "Requests per Service",
       "targets": [
         {
-          "expr": "sum by (service) (increase(http_requests_total[1m]))",
+          "expr": "sum by (service) (rate(http_requests_total[30s]))",
           "legendFormat": "{{service}}"
         }
       ],
@@ -18,7 +18,7 @@
       "title": "Total Traffic",
       "targets": [
         {
-          "expr": "sum(increase(http_requests_total[1m]))",
+          "expr": "sum(rate(http_requests_total[30s]))",
           "legendFormat": "total"
         }
       ],
@@ -29,16 +29,49 @@
       "title": "Top Services",
       "targets": [
         {
-          "expr": "topk(5, sum by (service) (increase(http_requests_total[1m])))",
+          "expr": "topk(5, sum by (service) (rate(http_requests_total[30s])))",
           "legendFormat": "{{service}}"
         }
       ],
       "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU Usage",
+      "targets": [
+        {
+          "expr": "rate(process_cpu_seconds_total[30s])",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 16, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory Usage",
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 16, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Service Health (UP)",
+      "targets": [
+        {
+          "expr": "up",
+          "legendFormat": "{{job}}"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 24, "w": 24, "h": 8 }
     }
   ],
   "schemaVersion": 38,
   "style": "dark",
-  "tags": ["microservices"],
-  "title": "Microservices Overview",
-  "version": 2
+  "tags": ["microservices", "sre"],
+  "title": "Microservices SRE Dashboard",
+  "version": 3
 }
