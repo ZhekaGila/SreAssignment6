@@ -1,5 +1,7 @@
 {
-  "annotations": { "list": [] },
+  "uid": "sre-dashboard",
+  "title": "SRE Dashboard",
+  "time": { "from": "now-5m", "to": "now" },
   "panels": [
     {
       "type": "timeseries",
@@ -11,54 +13,8 @@
         }
       ],
       "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
-    },
-    {
-      "type": "timeseries",
-      "title": "Error Rate (5xx)",
-      "targets": [
-        {
-          "expr": "rate(http_requests_total{status=~\"5..\"}[1m])",
-          "refId": "B"
-        }
-      ],
-      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
-    },
-    {
-      "type": "timeseries",
-      "title": "Average Response Time",
-      "targets": [
-        {
-          "expr": "rate(http_request_duration_seconds_sum[1m]) / rate(http_request_duration_seconds_count[1m])",
-          "refId": "C"
-        }
-      ],
-      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }
-    },
-    {
-      "type": "timeseries",
-      "title": "CPU Usage",
-      "targets": [
-        {
-          "expr": "rate(process_cpu_seconds_total[1m])",
-          "refId": "D"
-        }
-      ],
-      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }
-    },
-    {
-      "type": "timeseries",
-      "title": "Memory Usage",
-      "targets": [
-        {
-          "expr": "process_resident_memory_bytes",
-          "refId": "E"
-        }
-      ],
-      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 }
     }
   ],
   "schemaVersion": 38,
-  "version": 1,
-  "title": "SRE Dashboard",
-  "refresh": "5s"
+  "version": 1
 }
