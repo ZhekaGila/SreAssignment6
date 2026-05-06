@@ -74,14 +74,16 @@ services:
       - product-service
       - order-service
   grafana:
-    image: grafana/grafana
-    container_name: sre_grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-    depends_on:
-      - prometheus
+      image: grafana/grafana
+      container_name: sre_grafana
+      ports:
+        - "3000:3000"
+      env_file:
+        - .env
+      volumes:
+        - ./grafana/provisioning:/etc/grafana/provisioning
+      depends_on:
+        - prometheus
 
 volumes:
   postgres_data:
