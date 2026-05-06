@@ -12,9 +12,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-REQUEST_COUNT = Counter(
-    "user_service_requests_total",
-    "Total requests to User Service"
+REQUESTS = Counter(
+    "http_requests_total",
+    "Total HTTP requests",
+    ["service"]
 )
 
 users = [
@@ -24,17 +25,17 @@ users = [
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="user").inc()
     return {"service": "User Service", "status": "running"}
 
 @app.get("/users")
 def get_users():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="user").inc()
     return users
 
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="user").inc()
     for user in users:
         if user["id"] == user_id:
             return user

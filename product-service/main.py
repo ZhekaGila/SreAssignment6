@@ -12,9 +12,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-REQUEST_COUNT = Counter(
-    "product_service_requests_total",
-    "Total requests to Product Service"
+REQUESTS = Counter(
+    "http_requests_total",
+    "Total HTTP requests",
+    ["service"]
 )
 
 products = [
@@ -25,12 +26,12 @@ products = [
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="product").inc()
     return {"service": "Product Service", "status": "running"}
 
 @app.get("/products")
 def get_products():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="product").inc()
     return products
 
 @app.get("/metrics")

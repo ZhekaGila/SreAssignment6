@@ -14,9 +14,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-REQUEST_COUNT = Counter(
-    "order_service_requests_total",
-    "Total requests to Order Service"
+REQUESTS = Counter(
+    "http_requests_total",
+    "Total HTTP requests",
+    ["service"]
 )
 
 def get_connection():
@@ -30,19 +31,19 @@ def get_connection():
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="order").inc()
     return {"service": "Order Service", "status": "running"}
 
 @app.get("/health")
 def health():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="order").inc()
     conn = get_connection()
     conn.close()
     return {"status": "ok", "database": "connected"}
 
 @app.post("/orders")
 def create_order():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="order").inc()
 
     conn = get_connection()
     cursor = conn.cursor()

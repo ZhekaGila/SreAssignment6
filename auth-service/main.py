@@ -13,32 +13,36 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-REQUEST_COUNT = Counter(
-    "auth_service_requests_total",
-    "Total requests to Auth Service"
+REQUESTS = Counter(
+    "http_requests_total",
+    "Total HTTP requests",
+    ["service"]
 )
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="auth").inc()
     return {"service": "Auth Service", "status": "running"}
+
 
 @app.post("/login")
 def login():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="auth").inc()
     return {
         "message": "Login successful",
         "token": "demo-token",
         "role": "user"
     }
 
+
 @app.get("/authorize")
 def authorize():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="auth").inc()
     return {
         "authorized": True,
         "role": "user"
     }
+
 
 @app.get("/metrics")
 def metrics():

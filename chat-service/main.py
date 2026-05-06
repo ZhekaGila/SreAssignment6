@@ -13,9 +13,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-REQUEST_COUNT = Counter(
-    "chat_service_requests_total",
-    "Total requests to Chat Service"
+REQUESTS = Counter(
+    "http_requests_total",
+    "Total HTTP requests",
+    ["service"]
 )
 
 messages = []
@@ -26,18 +27,18 @@ class Message(BaseModel):
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="chat").inc()
     return {"service": "Chat Service", "status": "running"}
 
 @app.post("/messages")
 def send_message(message: Message):
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="chat").inc()
     messages.append(message.dict())
     return {"message": "Message sent", "data": message}
 
 @app.get("/messages")
 def get_messages():
-    REQUEST_COUNT.inc()
+    REQUEST_COUNT.labels(service="chat").inc()
     return messages
 
 @app.get("/metrics")
