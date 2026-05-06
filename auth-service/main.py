@@ -21,13 +21,13 @@ REQUESTS = Counter(
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.labels(service="auth").inc()
+    REQUESTS.labels(service="auth").inc()
     return {"service": "Auth Service", "status": "running"}
 
 
 @app.post("/login")
 def login():
-    REQUEST_COUNT.labels(service="auth").inc()
+    REQUESTS.labels(service="auth").inc()
     return {
         "message": "Login successful",
         "token": "demo-token",
@@ -37,7 +37,7 @@ def login():
 
 @app.get("/authorize")
 def authorize():
-    REQUEST_COUNT.labels(service="auth").inc()
+    REQUESTS.labels(service="auth").inc()
     return {
         "authorized": True,
         "role": "user"

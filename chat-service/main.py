@@ -27,18 +27,18 @@ class Message(BaseModel):
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.labels(service="chat").inc()
+    REQUESTS.labels(service="chat").inc()
     return {"service": "Chat Service", "status": "running"}
 
 @app.post("/messages")
 def send_message(message: Message):
-    REQUEST_COUNT.labels(service="chat").inc()
+    REQUESTS.labels(service="chat").inc()
     messages.append(message.dict())
     return {"message": "Message sent", "data": message}
 
 @app.get("/messages")
 def get_messages():
-    REQUEST_COUNT.labels(service="chat").inc()
+    REQUESTS.labels(service="chat").inc()
     return messages
 
 @app.get("/metrics")

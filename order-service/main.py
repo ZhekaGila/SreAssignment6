@@ -31,19 +31,19 @@ def get_connection():
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.labels(service="order").inc()
+    REQUESTS.labels(service="order").inc()
     return {"service": "Order Service", "status": "running"}
 
 @app.get("/health")
 def health():
-    REQUEST_COUNT.labels(service="order").inc()
+    REQUESTS.labels(service="order").inc()
     conn = get_connection()
     conn.close()
     return {"status": "ok", "database": "connected"}
 
 @app.post("/orders")
 def create_order():
-    REQUEST_COUNT.labels(service="order").inc()
+    REQUESTS.labels(service="order").inc()
 
     conn = get_connection()
     cursor = conn.cursor()

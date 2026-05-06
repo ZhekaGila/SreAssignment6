@@ -26,12 +26,12 @@ products = [
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.labels(service="product").inc()
+    REQUESTS.labels(service="product").inc()
     return {"service": "Product Service", "status": "running"}
 
 @app.get("/products")
 def get_products():
-    REQUEST_COUNT.labels(service="product").inc()
+    REQUESTS.labels(service="product").inc()
     return products
 
 @app.get("/metrics")

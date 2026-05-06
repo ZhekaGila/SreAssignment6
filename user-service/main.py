@@ -25,17 +25,17 @@ users = [
 
 @app.get("/")
 def home():
-    REQUEST_COUNT.labels(service="user").inc()
+    REQUESTS.labels(service="user").inc()
     return {"service": "User Service", "status": "running"}
 
 @app.get("/users")
 def get_users():
-    REQUEST_COUNT.labels(service="user").inc()
+    REQUESTS.labels(service="user").inc()
     return users
 
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
-    REQUEST_COUNT.labels(service="user").inc()
+    REQUESTS.labels(service="user").inc()
     for user in users:
         if user["id"] == user_id:
             return user
