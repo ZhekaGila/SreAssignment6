@@ -1,4 +1,4 @@
-const BASE = "http://13.61.167.182";
+const BASE = "http://zhandos.website";
 
 function show(data) {
   document.getElementById("output").textContent =
