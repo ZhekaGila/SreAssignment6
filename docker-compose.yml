@@ -52,6 +52,16 @@ services:
       - auth-service
       - user-service
       - chat-service
+
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter
+    ports:
+      - "9113:9113"
   db:
     image: postgres:15
     container_name: sre_postgres
