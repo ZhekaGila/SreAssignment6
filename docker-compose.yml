@@ -65,6 +65,10 @@ services:
       - postgres_data:/var/lib/postgresql/data
   prometheus:
     image: prom/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.external-url=/prometheus'
+      - '--web.route-prefix=/'
     container_name: prometheus
     ports:
       - "9090:9090"
