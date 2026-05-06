@@ -41,6 +41,11 @@ def get_messages():
     REQUESTS.labels(service="chat").inc()
     return messages
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 @app.get("/metrics")
 def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+

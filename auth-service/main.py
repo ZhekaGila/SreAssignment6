@@ -43,6 +43,9 @@ def authorize():
         "role": "user"
     }
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.get("/metrics")
 def metrics():
