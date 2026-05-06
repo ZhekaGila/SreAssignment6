@@ -42,6 +42,6 @@ resource "aws_instance" "sre_vm" {
   key_name               = var.key_name
 
   tags = {
-    Name = "sre-assignment"
+    Name = "SreAssignment6EC2"
   }
 }
