@@ -4,62 +4,41 @@
   "panels": [
     {
       "type": "timeseries",
-      "title": "Auth Service",
+      "title": "Requests per Service",
       "targets": [
         {
-          "expr": "rate(auth_service_requests_total[1m])",
-          "legendFormat": "auth"
+          "expr": "sum by (service) (increase(http_requests_total[1m]))",
+          "legendFormat": "{{service}}"
         }
       ],
-      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 }
     },
     {
       "type": "timeseries",
-      "title": "Product Service",
+      "title": "Total Traffic",
       "targets": [
         {
-          "expr": "rate(product_service_requests_total[1m])",
-          "legendFormat": "product"
-        }
-      ],
-      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
-    },
-    {
-      "type": "timeseries",
-      "title": "Order Service",
-      "targets": [
-        {
-          "expr": "rate(order_service_requests_total[1m])",
-          "legendFormat": "order"
+          "expr": "sum(increase(http_requests_total[1m]))",
+          "legendFormat": "total"
         }
       ],
       "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }
     },
     {
       "type": "timeseries",
-      "title": "User Service",
+      "title": "Top Services",
       "targets": [
         {
-          "expr": "rate(user_service_requests_total[1m])",
-          "legendFormat": "user"
+          "expr": "topk(5, sum by (service) (increase(http_requests_total[1m])))",
+          "legendFormat": "{{service}}"
         }
       ],
       "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }
-    },
-    {
-      "type": "timeseries",
-      "title": "Chat Service",
-      "targets": [
-        {
-          "expr": "rate(chat_service_requests_total[1m])",
-          "legendFormat": "chat"
-        }
-      ],
-      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 }
     }
   ],
   "schemaVersion": 38,
   "style": "dark",
+  "tags": ["microservices"],
   "title": "Microservices Overview",
-  "version": 1
+  "version": 2
 }
