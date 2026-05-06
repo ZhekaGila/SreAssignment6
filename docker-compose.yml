@@ -65,7 +65,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
   prometheus:
     image: prom/prometheus
-    container_name: sre_prometheus
+    container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
