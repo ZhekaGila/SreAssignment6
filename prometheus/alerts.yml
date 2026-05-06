@@ -1,0 +1,26 @@
+groups:
+  - name: sre-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total[1m]) > 0.5
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          description: "High CPU usage detected"
+
+      - alert: ServiceDown
+        expr: up == 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          description: "Service is down"
+
+      - alert: HighTraffic
+        expr: sum(rate(http_requests_total[30s])) > 50
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          description: "Traffic spike detected"
