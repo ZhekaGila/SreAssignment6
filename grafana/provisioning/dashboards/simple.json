@@ -1,20 +1,57 @@
 {
-  "uid": "sre-dashboard",
-  "title": "SRE Dashboard",
-  "time": { "from": "now-5m", "to": "now" },
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
   "panels": [
     {
       "type": "timeseries",
-      "title": "Requests per Second",
+      "title": "Requests per Service",
       "targets": [
         {
           "expr": "rate(http_requests_total[1m])",
-          "refId": "A"
+          "legendFormat": "{{job}}"
         }
       ],
       "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "5xx Errors",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{status=~\"5..\"}[1m])",
+          "legendFormat": "{{job}}"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Latency (p95)",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(request_duration_seconds_bucket[1m]))",
+          "legendFormat": "{{job}}"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Total Traffic",
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total[1m]))",
+          "legendFormat": "total"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }
     }
   ],
   "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["microservices"],
+  "title": "Microservices Overview",
   "version": 1
 }
